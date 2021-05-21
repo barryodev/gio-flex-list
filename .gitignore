@@ -1,0 +1,13 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+bin/
+
+# Jetbrains IDEA stuff
+.idea/
+*.iml
+
+# Coverage Report
+coverage.txt
