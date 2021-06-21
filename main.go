@@ -16,6 +16,12 @@ import (
 	"time"
 )
 
+const dummyContents string = `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla malesuada pellentesque elit eget gravida cum. Ultricies mi quis hendrerit dolor. Lectus quam id leo in vitae turpis massa sed elementum. Luctus venenatis lectus magna fringilla urna. Sollicitudin ac orci phasellus egestas tellus rutrum tellus. Eget est lorem ipsum dolor sit amet consectetur. Adipiscing tristique risus nec feugiat in fermentum posuere urna nec. Sed elementum tempus egestas sed sed risus pretium quam. Eget velit aliquet sagittis id consectetur purus ut faucibus. Risus sed vulputate odio ut enim blandit volutpat maecenas volutpat. Lacus vel facilisis volutpat est velit egestas. Massa sed elementum tempus egestas sed sed. Blandit volutpat maecenas volutpat blandit.
+
+Quam nulla porttitor massa id neque aliquam vestibulum morbi blandit. Est velit egestas dui id ornare arcu odio. Eget nulla facilisi etiam dignissim diam. Condimentum mattis pellentesque id nibh. Suspendisse sed nisi lacus sed viverra tellus. Ut tellus elementum sagittis vitae et leo duis ut diam. Neque gravida in fermentum et sollicitudin ac orci phasellus. Ultricies mi quis hendrerit dolor magna eget est lorem. Sit amet mauris commodo quis imperdiet. Ut pharetra sit amet aliquam id diam. Volutpat est velit egestas dui id ornare arcu odio ut. Mauris vitae ultricies leo integer malesuada nunc. Ut sem viverra aliquet eget sit amet tellus cras. Odio tempor orci dapibus ultrices in iaculis nunc sed augue. Vestibulum rhoncus est pellentesque elit.
+`
+
 // UI holds all of the application state.
 type UI struct {
 	// Theme is used to hold the fonts used throughout the application.
@@ -167,19 +173,27 @@ func StringWithCharset(length int, charset string) string {
 	return string(b)
 }
 
-func RandomString() string {
-	max := 10
-	min := 5
-	return StringWithCharset(rand.Intn(max - min) + min, charset)
+func RandomString(numberOfWords, lengthOfWord int) string {
+	var randomWords string
+
+	for i := 0; i < numberOfWords; i++ {
+		randomWords += StringWithCharset(lengthOfWord, charset)
+
+		if i != numberOfWords - 1 {
+			randomWords += " "
+		}
+	}
+
+	return randomWords
 }
 
 func createDummyEntries() []*entry {
-	dummyEntries := make([]*entry, 10)
+	dummyEntries := make([]*entry, 20)
 
-	for i := 0; i < 10; i++ {
-		fakeEntry := entry{title: RandomString(),
-			url: "http://www." + RandomString() + ".com/" + RandomString(),
-			contents: createDummyContents()}
+	for i := 0; i < 20; i++ {
+		fakeEntry := entry{title: RandomString(5, 7),
+			url: "http://www." + RandomString(1, 20) + ".com/" + RandomString(1, 10),
+			contents: dummyContents}
 
 		dummyEntries[i] = &fakeEntry
 	}
@@ -187,25 +201,12 @@ func createDummyEntries() []*entry {
 	return dummyEntries
 }
 
-func createDummyContents() string {
-	min := 30
-	max := 60
-
-	totalWords := rand.Intn(max - min) + min
-
-	dummyContents := ""
-	for i := 0; i < totalWords; i++ {
-		dummyContents += RandomString() + " "
-	}
-
-	return dummyContents
-}
 
 func createDummyFeeds() []*feed {
-	dummyFeeds := make([]*feed, 10)
+	dummyFeeds := make([]*feed, 50)
 
-	for i := 0; i < 10; i++ {
-		fakeFeed := feed{name: RandomString(), url: "http://www." + RandomString() + ".com/" + RandomString() }
+	for i := 0; i < 50; i++ {
+		fakeFeed := feed{name: RandomString(3, 6), url: "http://www." + RandomString(1, 20) + ".com/" + RandomString(1, 10) }
 		dummyFeeds[i] = &fakeFeed
 	}
 
