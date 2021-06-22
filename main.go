@@ -69,7 +69,7 @@ func main() {
 
 	go func() {
 		w := app.NewWindow(
-			app.Title("Counter"),
+			app.Title("FlexList"),
 			app.Size(unit.Dp(540), unit.Dp(350)),
 		)
 		if err := ui.Run(w); err != nil {
